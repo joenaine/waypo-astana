@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: singleCircleList.map((e) => e).toList(),
               ),
               const SizedBox(height: 20),
+              const Text('Animation Duration'),
               AnimatedBuilder(
                   animation: animationController,
                   builder: (_, __) {
