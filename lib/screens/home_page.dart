@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waypoing/data/data.dart';
 import 'package:waypoing/widgets/single_circle.dart';
 
 final pageBucket = PageStorageBucket();
@@ -11,63 +12,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  late AnimationController animationController;
+
   @override
   void initState() {
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
     SingleCircle.greenController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 200),
     );
     SingleCircle.blueController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 200),
     );
     SingleCircle.yellowController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 200),
     );
+
     super.initState();
   }
 
-  ScrollController controller = ScrollController();
-
-  List<SingleCircle> singleCircleList = [
-    const SingleCircle(
-      color: Colors.green,
-    ),
-  ];
-
-  List<SingleCircle> addCirclesList = [
-    const SingleCircle(
-      color: Colors.green,
-    ),
-    const SingleCircle(
-      color: Colors.green,
-    ),
-    const SingleCircle(
-      color: Colors.yellow,
-    ),
-    const SingleCircle(
-      color: Colors.yellow,
-    ),
-    const SingleCircle(
-      color: Colors.blue,
-    ),
-    const SingleCircle(
-      color: Colors.blue,
-    ),
-    const SingleCircle(
-      color: Colors.green,
-    ),
-    const SingleCircle(
-      color: Colors.blue,
-    ),
-    const SingleCircle(
-      color: Colors.yellow,
-    ),
-    const SingleCircle(
-      color: Colors.green,
-    ),
-  ];
+  @override
+  void dispose() {
+    super.dispose();
+    animationController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,10 +54,35 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Wrap(
                 children: singleCircleList.map((e) => e).toList(),
               ),
-              Slider(
-                label: '1',
-                value: 1,
-                onChanged: (value) {},
+              const SizedBox(height: 20),
+              AnimatedBuilder(
+                  animation: animationController,
+                  builder: (_, __) {
+                    return Slider(
+                      min: 200,
+                      max: 1000,
+                      label: animationController.duration?.inMilliseconds
+                          .toString(),
+                      value: double.parse(animationController
+                          .duration!.inMilliseconds
+                          .toString()),
+                      onChanged: (value) {
+                        animationController.duration =
+                            Duration(milliseconds: value.toInt());
+
+                        SingleCircle.blueController?.duration =
+                            Duration(milliseconds: value.toInt());
+                        SingleCircle.greenController?.duration =
+                            Duration(milliseconds: value.toInt());
+                        SingleCircle.yellowController?.duration =
+                            Duration(milliseconds: value.toInt());
+
+                        setState(() {});
+                      },
+                    );
+                  }),
+              Text(
+                '${animationController.duration?.inMilliseconds} ms',
               ),
             ],
           ),
@@ -103,6 +101,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           TextButton(
               onPressed: () {
                 singleCircleList.clear();
+                singleCircleList.add(
+                  const SingleCircle(
+                    color: Colors.green,
+                  ),
+                );
                 setState(() {});
               },
               child: const Text('Clear')),
