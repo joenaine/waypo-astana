@@ -39,22 +39,26 @@ class _SingleCircleState extends State<SingleCircle>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          if (SingleCircle.isFilled) {
-            animationController?.forward();
-          } else {
-            animationController?.reverse();
-          }
-          SingleCircle.isFilled = !SingleCircle.isFilled;
-        },
-        child: Stack(
-          children: [
-            CustomPaint(
-              size: const Size(25, 25),
-              painter: CirclePaint(animationController!.view, widget.color),
-            ),
-          ],
-        ));
+    return SizedBox(
+      height: 25,
+      width: 25,
+      child: GestureDetector(
+          onTap: () {
+            if (SingleCircle.isFilled) {
+              animationController?.forward();
+            } else {
+              animationController?.reverse();
+            }
+            SingleCircle.isFilled = !SingleCircle.isFilled;
+          },
+          child: Stack(
+            children: [
+              CustomPaint(
+                size: const Size(25, 25),
+                painter: CirclePaint(animationController!.view, widget.color),
+              ),
+            ],
+          )),
+    );
   }
 }

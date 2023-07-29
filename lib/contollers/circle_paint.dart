@@ -9,7 +9,7 @@ class CirclePaint extends CustomPainter {
 
   CirclePaint(Animation<double> animation, this.color)
       : _size = Tween<double>(begin: 8, end: 0).animate(animation),
-        _sizeCheck = Tween<double>(begin: -3, end: 1.5).animate(animation),
+        _sizeCheck = Tween<double>(begin: -8, end: 1.5).animate(animation),
         super(repaint: animation);
 
   @override
@@ -33,7 +33,6 @@ class CirclePaint extends CustomPainter {
       _size.value,
       filledCircle,
     );
-    print(_size.value);
 
     final double iconSize = radius * _sizeCheck.value;
     final Offset iconOffset =

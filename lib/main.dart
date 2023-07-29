@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:waypoing/anim_checkbox.dart';
 import 'package:waypoing/screens/home_page.dart';
 
 void main() {
