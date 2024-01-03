@@ -49,7 +49,7 @@ class _SingleCircleState extends State<SingleCircle>
           SingleCircle.isFilled = !SingleCircle.isFilled;
         },
         child: CustomPaint(
-          size: const Size(25, 25),
+          size: const Size(50, 50),
           painter: CirclePaint(animationController!.view, widget.color),
         ));
   }

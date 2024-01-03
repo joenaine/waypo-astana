@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Wrap(
                 children: singleCircleList.map((e) => e).toList(),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 50),
               const Text('Animation duration'),
               AnimatedBuilder(
                   animation: animationController,
